@@ -1,3 +1,6 @@
+/*
+ * test test test
+ */
 package org.springframework.samples.petclinic.system;
 
 import javax.cache.configuration.Configuration;
