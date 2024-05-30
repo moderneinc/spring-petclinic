@@ -63,17 +63,17 @@ public class ClinicServiceTests {
     @Test
     public void shouldFindOwnersByLastName() {
         Collection<Owner> owners = this.owners.findByLastName("Davis");
-        assertThat(owners.size()).isEqualTo(2);
+        assertThat(owners).hasSize(2);
 
         owners = this.owners.findByLastName("Daviss");
-        assertThat(owners.isEmpty()).isTrue();
+        assertThat(owners).isEmpty();
     }
 
     @Test
     public void shouldFindSingleOwnerWithPet() {
         Owner owner = this.owners.findById(1);
         assertThat(owner.getLastName()).startsWith("Franklin");
-        assertThat(owner.getPets().size()).isEqualTo(1);
+        assertThat(owner.getPets()).hasSize(1);
         assertThat(owner.getPets().get(0).getType()).isNotNull();
         assertThat(owner.getPets().get(0).getType().getName()).isEqualTo("cat");
     }
@@ -94,7 +94,7 @@ public class ClinicServiceTests {
         assertThat(owner.getId().longValue()).isNotEqualTo(0);
 
         owners = this.owners.findByLastName("Schultz");
-        assertThat(owners.size()).isEqualTo(found + 1);
+        assertThat(owners).hasSize(found + 1);
     }
 
     @Test
@@ -142,13 +142,13 @@ public class ClinicServiceTests {
         pet.setType(EntityUtils.getById(types, PetType.class, 2));
         pet.setBirthDate(new Date());
         owner6.addPet(pet);
-        assertThat(owner6.getPets().size()).isEqualTo(found + 1);
+        assertThat(owner6.getPets()).hasSize(found + 1);
 
         this.pets.save(pet);
         this.owners.save(owner6);
 
         owner6 = this.owners.findById(6);
-        assertThat(owner6.getPets().size()).isEqualTo(found + 1);
+        assertThat(owner6.getPets()).hasSize(found + 1);
         // checks that id has been generated
         assertThat(pet.getId()).isNotNull();
     }
@@ -190,14 +190,14 @@ public class ClinicServiceTests {
         this.pets.save(pet7);
 
         pet7 = this.pets.findById(7);
-        assertThat(pet7.getVisits().size()).isEqualTo(found + 1);
+        assertThat(pet7.getVisits()).hasSize(found + 1);
         assertThat(visit.getId()).isNotNull();
     }
 
     @Test
     public void shouldFindVisitsByPetId() throws Exception {
         Collection<Visit> visits = this.visits.findByPetId(7);
-        assertThat(visits.size()).isEqualTo(2);
+        assertThat(visits).hasSize(2);
         Visit[] visitArr = visits.toArray(new Visit[visits.size()]);
         assertThat(visitArr[0].getDate()).isNotNull();
         assertThat(visitArr[0].getPetId()).isEqualTo(7);
